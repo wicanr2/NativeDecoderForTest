@@ -213,6 +213,7 @@ static void video_decode(void)
 	sp<SurfaceControl> control;
 	sp<Surface> surface;
     
+    //RGB565 
 	control = composerClient->createSurface(String8(LOG_TAG), 1280, 800, PIXEL_FORMAT_RGB_565, 0);
 	SurfaceComposerClient::openGlobalTransaction();
 	control->setLayer(21015);
@@ -313,6 +314,8 @@ int main(int argc, char *argv[])
 {
 	pthread_t recv_tid;
 	pthread_t vdec_tid;
+    //TODO add init
+    //TODO add command parsing for setting parameters
 	quit = 0;
 	vbuf_wptr = 0;
 	vbuf_rptr = 0;
@@ -332,7 +335,7 @@ int main(int argc, char *argv[])
     signal(SIGKILL, term_proc);
 	
 	android::ProcessState::self()->startThreadPool();
-	
+    // if argc > 2	
 	pthread_create(&recv_tid, NULL, udp_recv, NULL);
 	video_decode();
 }
